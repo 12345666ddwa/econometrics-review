@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计量经济学 · 以题带学 · 川农期末</title>
+<style>
+:root{
+  --cream:#faf7f0;--red:#960002;--gold:#c9a23b;--kw:#2563eb;--kwr:#dc2626;
+  --card:#fff;--text:#2d2d2d;--t2:#6b6b6b;--bd:#e8e0d5;--sh:0 2px 12px rgba(0,0,0,.05);
+  --gn:#059669;--pa:#fdfaf3;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--cream);color:var(--text);line-height:1.95;font-size:17px}
+.sidebar{position:fixed;left:0;top:0;width:220px;height:100vh;background:linear-gradient(180deg,#1a1a2e,#2d1c1c);overflow-y:auto;z-index:200;padding:20px 0;box-shadow:2px 0 20px rgba(0,0,0,.3)}
+.sidebar h3{color:#ffcc80;text-align:center;font-size:14px;padding:0 16px 16px;border-bottom:1px solid #3a3a5a;margin-bottom:8px}
+.sidebar a{display:block;color:#bbb;text-decoration:none;padding:10px 20px;font-size:13px;transition:.2s;border-left:3px solid transparent}
+.sidebar a:hover,.sidebar a.active{color:#ffcc80;background:rgba(255,255,255,.05);border-left-color:#ffcc80}
+.main{margin-left:220px;padding:20px 32px 80px;max-width:1000px}
+.page-header{text-align:center;padding:36px 20px 20px;background:linear-gradient(180deg,#fff,var(--cream));border-bottom:3px solid var(--gold);margin-bottom:24px}
+.page-header .sch{font-size:13px;color:var(--t2)}
+.page-header h1{font-size:30px;color:var(--red);font-weight:800;letter-spacing:2px}
+.page-header .sub{font-size:14px;color:var(--t2);margin-top:4px}
+
+/* CHAPTER */
+.chapter{background:var(--card);border-radius:12px;padding:28px 30px;margin-bottom:24px;box-shadow:var(--sh);border-left:5px solid var(--red)}
+.chapter h2{font-size:22px;color:var(--red);margin-bottom:6px}
+.chapter .em{font-size:13px;color:var(--t2);margin-bottom:18px}
+
+/* SECTION ACCORDION - unified */
+.sec-title{cursor:pointer;font-size:18px;font-weight:700;color:#5c3d1a;padding:10px 0;border-bottom:1px solid var(--bd);margin:20px 0 6px;user-select:none;display:flex;align-items:center;gap:8px}
+.sec-title .arrow{display:inline-block;transition:.3s;font-size:14px}
+.sec-title.open .arrow{transform:rotate(90deg)}
+.sec-body{display:none}
+.sec-body.open{display:block}
+
+/* QUESTION CARD */
+.qcard{background:var(--pa);border:1px solid var(--bd);border-radius:8px;padding:18px 22px;margin:14px 0;position:relative}
+.qcard::before{content:'';position:absolute;top:0;left:40px;right:40px;height:1px;background:repeating-linear-gradient(90deg,transparent,transparent 8px,#e0d5c0 8px,#e0d5c0 9px)}
+.qtag{display:inline-block;background:var(--red);color:#fff;font-weight:700;padding:2px 12px;border-radius:4px;font-size:12px;margin-bottom:10px}
+.qtag.g{background:var(--gn)}.qtag.b{background:var(--kw)}
+.qtxt{font-size:16px;margin-bottom:12px;line-height:2}
+.opt{display:block;padding:3px 0;font-size:15px;color:var(--text)}
+/* All options look identical until reveal */
+.btn{display:inline-block;background:var(--gold);color:#fff;border:none;padding:7px 18px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;transition:.2s;margin-top:6px}
+.btn:hover{background:#b0892e}
+
+/* ANSWER + KNOWLEDGE wrapper - hidden by default */
+.ak-wrap{display:none;margin-top:14px}
+.ak-wrap.open{display:block}
+.ans-box{padding:16px 20px;background:#f0f9ff;border-radius:6px 6px 0 0;border-left:3px solid var(--kw);font-size:15px;line-height:2}
+.ans-box .correct{color:var(--gn);font-weight:700}
+.know-box{padding:18px 22px;background:linear-gradient(135deg,#fef9e7,#fffdf0);border:1px solid #e5c850;border-top:none;border-radius:0 0 8px 8px;font-size:15px;line-height:2.1}
+.know-box h4{color:var(--red);margin-bottom:10px;font-size:17px}
+
+.kw{background:#dbeafe;color:var(--kw);font-weight:700;padding:2px 8px;border-radius:4px;font-size:.94em}
+.kwr{background:#fee2e2;color:var(--kwr);font-weight:700;padding:2px 8px;border-radius:4px;font-size:.94em}
+
+.fml{background:linear-gradient(135deg,#fefefe,#f9f5eb);border:1px solid var(--bd);border-radius:8px;padding:16px 20px;margin:12px 0;text-align:center;font-size:17px;font-family:'Cambria Math','Times New Roman',serif}
+
+.tbl{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.tbl th{background:var(--red);color:#fff;padding:10px 12px;font-weight:600;text-align:center}
+.tbl td{padding:10px 12px;border:1px solid var(--bd);text-align:center}
+.tbl tr:nth-child(even) td{background:#fdfaf3}
+
+.tip{background:linear-gradient(135deg,#fef3c7,#fef9e7);border:1px solid #e5c850;border-radius:8px;padding:12px 18px;margin:12px 0;font-size:15px}
+.tip::before{content:'💡 '}
+.trp{background:linear-gradient(135deg,#fee2e2,#fef2f2);border:1px solid #fca5a5;border-radius:8px;padding:12px 18px;margin:12px 0;font-size:15px}
+.trp::before{content:'⚠️ 易错：';font-weight:700;color:var(--kwr)}
+.bar{background:linear-gradient(135deg,#1e3a5f,#2a5298);color:#fff;border-radius:8px;padding:16px 22px;margin:16px 0;font-size:15px;line-height:2}
+.bar strong{color:#ffcc80}
+
+.page-footer{text-align:center;padding:30px 20px;color:var(--t2);font-size:13px;border-top:2px solid var(--bd);margin-top:30px}
+.page-footer .st{color:var(--red);font-weight:700}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0;padding:12px}}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <h3>📊 以题带学</h3>
+  <a href="#c1">🔥 1.虚拟变量+DID</a>
+  <a href="#c2">⭐ 2.异方差性</a>
+  <a href="#c3">⭐ 3.序列相关/DW</a>
+  <a href="#c4">📌 4.OLS假设+BLUE</a>
+  <a href="#c5">📌 5.t/F检验</a>
+  <a href="#c6">📌 6.多重共线性</a>
+  <a href="#c7">📌 7.对数弹性</a>
+  <a href="#c8">📌 8.Logit/Probit</a>
+  <a href="#c9">📌 9.面板数据</a>
+  <a href="#c10">📌 10.时间序列</a>
+</nav>
+
+<div class="main">
+
+<header class="page-header">
+  <div class="sch">四川农业大学 · 经济学院 · 计量经济学导论（伍德里奇第七版）</div>
+  <h1>📚 以题带学 · 期末专属题库</h1>
+  <div class="sub">2026春 · 统一试卷 | 每题点"看答案"才显示正确答案+零基础知识点 | Hermes × 高兴</div>
+</header>
+
+<!-- ================================================================ -->
+<!-- CHAPTER 1 -->
+<!-- ================================================================ -->
+<div class="chapter" id="c1">
+<h2>🔥 第一章：虚拟变量与DID政策评估（约35-48分）</h2>
+<div class="em">老师说最后一题跟虚拟变量有关 | 复习2.pdf的DID题可能出案例分析</div>
+
+<!-- 单选 -->
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 一、单选题（7道自测）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">当质的因素引进经济计量模型时，需要使用（ ）</div>
+<div class="opt">A. 外生变量</div><div class="opt">B. 前定变量</div><div class="opt">C. 内生变量</div><div class="opt">D. 虚拟变量</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 虚拟变量</span></p><p>"质的因素"=定性因素 → 唯一处理工具=虚拟变量。</p></div>
+<div class="know-box"><h4>📚 什么是虚拟变量</h4><p>回归方程只能吃<span class="kw">数字</span>，不能吃"男/女"。所以需要虚拟变量（Dummy Variable）——把质的因素翻译成<span class="kwr">0或1</span>。<span class="kw">0</span>=基准组，<span class="kw">1</span>=具有某属性的组。所有系数都是<span class="kwr">相对于0那组</span>来解释的。</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q2</div><div class="qtxt">消费函数中，年龄分为小孩、青年、成年、老年4个层次。边际消费倾向不变，应引入虚拟变量个数为（ ）</div>
+<div class="opt">A. 1个</div><div class="opt">B. 2个</div><div class="opt">C. 3个</div><div class="opt">D. 4个</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">C. 3个</span> &nbsp;4个层次→4−1=3个虚拟变量。</p></div>
+<div class="know-box"><h4>📚 m−1 规则（必考！）</h4><p>有截距项时：<span class="kwr">m个类别 → 引入 m−1 个虚拟变量</span>。如果引入m个+截距 → <span class="kwr">完全多重共线性</span>（虚拟变量陷阱）。</p><div class="trp">Q101问"无截距项时"→ 可引入全部m个。注意区分"有无截距"！</div></div></div></div>
+
+<div class="qcard"><div class="qtag">Q3</div><div class="qtxt">需求模型 y=b₀+b₁x+u，为考虑12个月季节变动，引入12个虚拟变量→产生（ ）</div>
+<div class="opt">A. 异方差性</div><div class="opt">B. 序列相关</div><div class="opt">C. 不完全多重共线性</div><div class="opt">D. 完全多重共线性</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 完全多重共线性</span></p><p>12个月+截距→只需要11个虚拟变量。引入12个=虚拟变量陷阱。</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q4</div><div class="qtxt">模型 y=b₀+b₁x+u，考虑"地区"（北方/南方），引入2个虚拟变量→产生（ ）</div>
+<div class="opt">A. 序列完全相关</div><div class="opt">B. 序列不完全相关</div><div class="opt">C. 完全多重共线性</div><div class="opt">D. 不完全多重共线性</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">C. 完全多重共线性</span> &nbsp;2类+截距→只需1个虚拟变量。</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q5</div><div class="qtxt">分段线性回归模型的几何图形是（ ）</div>
+<div class="opt">A. 平行线</div><div class="opt">B. 垂直线</div><div class="opt">C. 光滑曲线</div><div class="opt">D. 折线</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 折线</span> &nbsp;不同区间不同斜率→图形是折线。</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q6</div><div class="qtxt">y=a₀+a₁D+b₁x+u，D=1东中部/D=0西部。若a₁=0成立，两地区消费函数（ ）</div>
+<div class="opt">A. 相互平行</div><div class="opt">B. 相互垂直</div><div class="opt">C. 相互交叉</div><div class="opt">D. 相互重叠</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 相互重叠</span> &nbsp;a₁=0→截距相同，斜率都是b₁→两条线完全一样。</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q7</div><div class="qtxt">y=a₀+a₁D+b₀x+b₁(D·x)+u，D=1城镇/D=0农村。城镇和农村消费行为一样的条件是（ ）</div>
+<div class="opt">A. a₁=0且b₁=0</div><div class="opt">B. a₁≠0且b₁=0</div><div class="opt">C. a₁=0且b₁≠0</div><div class="opt">D. a₁≠0且b₁≠0</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">A. a₁=0且b₁=0</span> &nbsp;截距相同+斜率相同=完全一样。这本质是<span class="kwr">约束F检验</span>的两个约束。</p></div></div></div>
+
+</div><!-- /单选 -->
+
+<!-- 简答 -->
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 二、简答题（3道必背）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag g">简答Q40 🔥</div><div class="qtxt"><strong>虚拟变量引入的方式及每种方式的作用是什么？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box">
+<p>（1）<span class="kw">加法方式</span>→改变<span class="kwr">截距</span>水平（平行移动，斜率相同）</p>
+<p>（2）<span class="kw">乘法方式</span>（交互项）→模型比较、交互影响分析、改变<span class="kwr">斜率</span></p>
+<p>（3）<span class="kw">一般方式</span>→既影响截距又影响斜率</p></div>
+<div class="know-box"><h4>📚 老师说压轴大题跟虚拟变量有关——这道简答就是大题的理论基础</h4>
+<div class="fml">加法：wage = β₀+β₁·female+β₂·educ → 截距不同，斜率相同<br>乘法：wage = β₀+β₁·female+β₂·educ+<span style="color:#dc2626">β₃·(female×educ)</span> → 截距和斜率都不同</div></div></div></div>
+
+<div class="qcard"><div class="qtag g">简答Q38</div><div class="qtxt"><strong>模型中引入虚拟变量的作用是什么？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>（1）描述和测量<span class="kw">定性因素</span>的影响；（2）正确反映经济变量关系，提高模型精度；（3）便于处理异常数据。</p></div></div></div>
+
+<div class="qcard"><div class="qtag g">简答Q39</div><div class="qtxt"><strong>虚拟变量引入的原则是什么？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>（1）m个特征→<span class="kw">m−1</span>个虚拟变量；（2）多个定性因素各两属性→引入m个；（3）取值从分析目的出发界定；（4）可作解释变量也可作被解释变量。</p></div></div></div>
+
+</div><!-- /简答 -->
+
+<!-- 大题 -->
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 三、案例分析：压轴大题模板 🔥🔥🔥</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag b">预测大题</div><div class="qtxt">
+<strong>wage = β₀+β₁female+β₂educ+β₃exper+β₄(female×educ)+u</strong><br>
+β̂₁=−2.5(0.8), β̂₂=1.8(0.3), β̂₃=0.5(0.2), β̂₄=−0.6(0.25), n=500, R²=0.42<br><br>
+(1) 写男性和女性各自的工资方程<br>
+(2) 教育对男/女的边际效应各是多少<br>
+(3) 检验教育回报率是否有性别差异（α=5%, t₀.₀₂₅≈1.96）<br>
+(4) 加入female×exper后，写出新模型并解释新增交互项<br>
+(5) 如何检验两个交互项是否联合显著</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看完整参考答案'">▼ 看完整参考答案</button>
+<div class="ak-wrap"><div class="ans-box" style="line-height:2.2">
+<p><strong>(1)</strong> 男 wage=β₀+1.8educ+0.5exper；女 wage=(β₀−2.5)+(1.8−0.6)educ+0.5exper =(β₀−2.5)+<strong>1.2</strong>educ+0.5exper</p>
+<p><strong>(2)</strong> 男=1.8；女=β₂+β₄=1.8+(−0.6)=<strong>1.2</strong></p>
+<p><strong>(3)</strong> H₀: β₄=0，t=−0.6/0.25=−2.4，|−2.4|>1.96 → <strong>拒绝H₀</strong> → 教育回报率存在显著性别差异</p>
+<p><strong>(4)</strong> wage=β₀+β₁female+β₂educ+β₃exper+β₄(female×educ)+<strong>β₅(female×exper)</strong>+u。β₅=工作经验多1年，女性比男性的额外回报差异</p>
+<p><strong>(5)</strong> 约束F。H₀:β₄=β₅=0。F=[(RSS_R−RSS_U)/2]/[RSS_U/(500−5−1)]。F>临界值→至少一个交互项显著</p></div></div></div>
+</div>
+
+<!-- DID -->
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 四、DID政策评估模型（复习2.pdf）🔥</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag b">DID通用模板</div><div class="qtxt">
+老师给的5道实证设计题，4问通用答案：<br><br>
+(1) <strong>数据结构：面板数据</strong>——政策在不同主体不同年份实施，需控制个体异质性<br>
+(2) <strong>DID模型：</strong>Y<sub>it</sub>=β₀+β₁(Treat<sub>i</sub>×Post<sub>t</sub>)+β₂Treat<sub>i</sub>+β₃Post<sub>t</sub>+γX<sub>it</sub>+ε<sub>it</sub>。β₁=<span class="kwr">政策效应</span><br>
+(3) <strong>控制变量：</strong>根据主体层次选择（城市→GDP/产业；家庭→收入/保险；企业→规模/盈利；农户→耕地/培训）<br>
+(4) <strong>估计：固定效应FE+对β₁做t检验</strong>。H₀:β₁=0，p&lt;0.05→显著</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ DID零基础知识点'">▼ DID零基础知识点</button>
+<div class="ak-wrap"><div class="know-box" style="border-radius:8px;border:1px solid #e5c850;">
+<h4>📚 DID = 虚拟变量乘法的政策应用</h4>
+<div class="fml">Y = β₀ + β₁·(Treat×Post) + β₂·Treat + β₃·Post + controls</div>
+<table class="tbl"><tr><th>变量</th><th>含义</th><th>对应你学过的</th></tr>
+<tr><td>Treat</td><td>=1处理组/=0对照组</td><td>虚拟变量（加法）</td></tr>
+<tr><td>Post</td><td>=1政策后/=0政策前</td><td>虚拟变量（加法）</td></tr>
+<tr><td style="color:var(--kwr)">Treat×Post</td><td style="color:var(--kwr)"><strong>交互项=政策因果效应</strong></td><td style="color:var(--kwr)">虚拟变量乘法！</td></tr></table>
+<p><span class="kwr">β₁就是政策效应</span>——跟虚拟变量里β₃是"差异的差异"逻辑完全一样。</p>
+<div class="trp">永远不要控制"政策实施后才变化"的变量——坏控制变量会吸走政策效应。</div>
+</div></div></div>
+
+</div>
+</div><!-- /chapter 1 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 2: 异方差 -->
+<!-- ================================================================ -->
+<div class="chapter" id="c2">
+<h2>⭐ 第二章：异方差性（Ch8 · 约15-20分）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 一、单选题（6道自测）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">Goldfeld-Quandt方法用于检验（ ）</div>
+<div class="opt">A. 异方差性</div><div class="opt">B. 自相关性</div><div class="opt">C. 随机解释变量</div><div class="opt">D. 多重共线性</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">A. 异方差性</span></p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q2</div><div class="qtxt">在异方差情况下，常用的估计方法是（ ）</div>
+<div class="opt">A. 一阶差分法</div><div class="opt">B. 广义差分法</div><div class="opt">C. 工具变量法</div><div class="opt">D. 加权最小二乘法</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 加权最小二乘法(WLS)</span></p></div>
+<div class="know-box"><p>异方差→WLS。一阶差分/广义差分→治<span class="kw">序列相关</span>。工具变量→治内生性。三者不能混！</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q3</div><div class="qtxt">下列哪种方法<strong>不是</strong>检验异方差的方法（ ）</div>
+<div class="opt">A. 戈德菲尔特—匡特检验</div><div class="opt">B. 怀特检验</div><div class="opt">C. 戈里瑟检验</div><div class="opt">D. 方差膨胀因子检验</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 方差膨胀因子检验</span> &nbsp;VIF是验<span class="kwr">多重共线性</span>的！</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q4</div><div class="qtxt">White检验方法主要用于检验（ ）</div>
+<div class="opt">A. 异方差性</div><div class="opt">B. 自相关性</div><div class="opt">C. 随机解释变量</div><div class="opt">D. 多重共线性</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">A. 异方差性</span></p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q5</div><div class="qtxt">加权最小二乘法克服异方差的主要原理是（ ）</div>
+<div class="opt">A. 重视大误差，轻视小误差</div><div class="opt">B. 重视小误差，轻视大误差</div><div class="opt">C. 重视小误差和大误差</div><div class="opt">D. 轻视小误差和大误差</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">B. 重视小误差，轻视大误差</span> &nbsp;小误差=靠谱→给大权。</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q6</div><div class="qtxt">果戈德菲尔特—匡特检验显著，则认为什么严重（ ）</div>
+<div class="opt">A. 异方差问题</div><div class="opt">B. 序列相关问题</div><div class="opt">C. 多重共线性问题</div><div class="opt">D. 设定误差问题</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">A. 异方差问题</span></p></div></div></div>
+
+</div><!-- /单选 -->
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 二、BP检验计算题（必会）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag b">BP检验</div><div class="qtxt">n=100，辅助回归 û²=δ₀+δ₁x₁+δ₂x₂+v 得R²=0.18。5%水平判断是否存在异方差（χ²₀.₀₅(2)=5.99）。</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案+完整知识点'">▼ 看答案+完整知识点</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <strong>LM = 100×0.18 = 18 > 5.99 → 拒绝H₀ → 存在异方差</strong></p></div>
+<div class="know-box"><h4>📚 BP检验完整步骤</h4><div class="fml">LM = n × R²<sub>辅助</sub> ~ χ²(k)</div><p>①OLS估计原模型→得残差û ②û²对X回归→得R²<sub>辅助</sub> ③算LM ④LM>临界值→异方差</p></div></div></div>
+
+</div>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 三、简答题（必背3道）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag g">Q20 🔥异方差后果</div><div class="qtxt"><strong>异方差的后果是什么？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>①<span style="color:var(--gn)">不影响无偏性</span> ②OLS<span style="color:var(--kwr)">不再有效</span> ③t/F检验<span style="color:var(--kwr)">失效</span> ④预测精度降低</p></div></div></div>
+
+<div class="qcard"><div class="qtag g">Q21 检验方法</div><div class="qtxt"><strong>异方差的检验方法有哪些？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>图示法、G-Q（戈德菲尔特-匡特，样本分段）、White（怀特，辅助回归通用法）、Glejser/Park（残差对X回归）、ARCH。共5种。</p></div></div></div>
+
+<div class="qcard"><div class="qtag g">Q23 WLS原理</div><div class="qtxt"><strong>加权最小二乘法的基本原理是什么？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>方差小的观测→可信度高→<span class="kw">给大权</span>；方差大的观测→可信度低→<span class="kw">给小权</span>。核心：<strong>重视小误差，轻视大误差。</strong></p></div></div></div>
+
+</div>
+</div><!-- /chapter 2 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 3: 序列相关 -->
+<!-- ================================================================ -->
+<div class="chapter" id="c3">
+<h2>⭐ 第三章：序列相关与DW检验（Ch12 · 约10-15分）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 全部题目（5道）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">DW的取值范围是（ ）</div>
+<div class="opt">A. −1≤DW≤0</div><div class="opt">B. −1≤DW≤1</div><div class="opt">C. −2≤DW≤2</div><div class="opt">D. 0≤DW≤4</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 0≤DW≤4</span></p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q2</div><div class="qtxt">DW检验的H₀是（ρ为一阶自相关系数）（ ）</div>
+<div class="opt">A. DW=0</div><div class="opt">B. ρ=0</div><div class="opt">C. DW=1</div><div class="opt">D. ρ=1</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">B. ρ=0</span> &nbsp;H₀:无自相关</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q3</div><div class="qtxt">当DW=4时，说明（ ）</div>
+<div class="opt">A. 不存在序列相关</div><div class="opt">B. 不能判断</div><div class="opt">C. 完全正一阶自相关</div><div class="opt">D. 完全负一阶自相关</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 完全负一阶自相关</span> &nbsp;DW≈2(1−ρ̂)，ρ̂=−1→DW=4</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q4 🔥最常考陷阱</div><div class="qtxt">n=30，DW=1.4，dL=1.35，dU=1.49（5%）。判断是否存在一阶自相关。</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案+完整判断规则'">▼ 看答案+完整判断规则</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ dL(1.35)&lt;DW(1.4)&lt;dU(1.49) → <strong>无法判断！</strong></p></div>
+<div class="know-box"><h4>📚 DW判断规则（必背）</h4>
+<div class="bar" style="font-size:15px;line-height:2.5">
+DW &lt; dL → 正自相关<br>
+<strong>dL &lt; DW &lt; dU → 🔴 无法判断！（最常考）</strong><br>
+dU &lt; DW &lt; 4−dU → ✅ 无自相关<br>
+4−dU &lt; DW &lt; 4−dL → 🔴 无法判断！<br>
+DW &gt; 4−dL → 负自相关
+</div>
+<div class="fml">DW ≈ 2(1−ρ̂) &nbsp;|&nbsp; DW∈[0,4] &nbsp;|&nbsp; DW≈2→无自相关</div></div></div></div>
+
+<div class="qcard"><div class="qtag">Q5</div><div class="qtxt">当模型存在序列相关时，适宜的参数估计方法是（ ）</div>
+<div class="opt">A. 加权最小二乘法</div><div class="opt">B. 间接最小二乘法</div><div class="opt">C. 广义差分法</div><div class="opt">D. 工具变量法</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">C. 广义差分法</span></p></div>
+<div class="know-box"><table class="tbl"><tr><th>问题</th><th>治疗方法</th></tr><tr><td>异方差</td><td>WLS</td></tr><tr><td class="kwr">序列相关</td><td class="kwr">广义差分(Cochrane-Orcutt)</td></tr></table></div></div></div>
+
+</div>
+</div><!-- /chapter 3 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 4: OLS + BLUE -->
+<!-- ================================================================ -->
+<div class="chapter" id="c4">
+<h2>📌 第四章：OLS基本假设与BLUE性质（简答固定节目·约20分）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 3道必背简答</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag g">简答Q7 🔥必背</div><div class="qtxt"><strong>古典线性回归模型的五个基本假定是什么？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box">
+<p>①<strong>线性于参数</strong> ②<strong>随机抽样</strong> ③<strong>X有变异</strong> ④<strong>零条件均值 E(u|X)=0</strong> ⑤<strong>同方差 Var(u|X)=σ²</strong></p></div>
+<div class="know-box"><h4>📚 速记：线·随·变·零·同</h4><div class="trp">最大易错：E(u|X)=0 千万别写成 E(X|u)=0！</div></div></div></div>
+
+<div class="qcard"><div class="qtag g">简答Q11 🔥必背</div><div class="qtxt"><strong>简述BLUE的含义。由什么定理给出？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>B=Best(最小方差)+L=Linear(线性)+U=Unbiased(无偏)+E=Estimator(估计量)</p><p>由<span class="kwr">高斯-马尔可夫定理</span>给出。</p></div>
+<div class="know-box"><div class="trp">B = 最小方差，不是"最小残差"！</div></div></div></div>
+
+<div class="qcard"><div class="qtag g">核心辨析 🔥</div><div class="qtxt"><strong>零条件均值和同方差各自保证OLS的什么性质？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box">
+<table class="tbl"><tr><th>假设</th><th>→保证</th><th>口诀</th></tr>
+<tr><td>E(u|X)=0</td><td><strong>无偏性</strong></td><td>零→无</td></tr>
+<tr><td>Var(u|X)=σ²</td><td><strong>有效性（最小方差）</strong></td><td>同→有</td></tr></table>
+</div></div></div>
+
+</div>
+</div><!-- /chapter 4 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 5: t/F -->
+<!-- ================================================================ -->
+<div class="chapter" id="c5">
+<h2>📌 第五章：t检验、F检验与显著性判断（贯穿全卷·约15分）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 全部题目（5道）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">判定系数R²的取值范围是（ ）</div>
+<div class="opt">A. R²≤−1</div><div class="opt">B. R²≥1</div><div class="opt">C. 0≤R²≤1</div><div class="opt">D. −1≤R²≤1</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">C. 0≤R²≤1</span></p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q2</div><div class="qtxt">当R²=1时，F等于（ ）</div>
+<div class="opt">A. F=1</div><div class="opt">B. F=−1</div><div class="opt">C. F=0</div><div class="opt">D. F=∞</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. F=∞</span> &nbsp;分母(1−R²)=0→分数→∞</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q3 🔥自由度</div><div class="qtxt">n=30，一元回归。检验β₁（α=0.05），t应与哪个临界值比较？（ ）</div>
+<div class="opt">A. t₀.₀₅(30)</div><div class="opt">B. t₀.₀₂₅(30)</div><div class="opt">C. t₀.₀₅(28)</div><div class="opt">D. t₀.₀₂₅(28)</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案+知识点'">▼ 看答案+知识点</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. t₀.₀₂₅(28)</span></p></div>
+<div class="know-box"><h4>📚 自由度 + 双尾检验</h4><p>一元回归df=n−2=28。默认双尾检验→用α/2→<span class="kwr">t₀.₀₂₅</span>。</p>
+<div class="bar"><strong>判断规则：</strong>|t|>临界值→拒绝H₀→<strong>显著</strong>；p<0.05→<strong>显著</strong>；大样本|t|>2→<strong>显著</strong></div>
+<div class="fml">t = β̂/se(β̂) &nbsp;|&nbsp; F = R²/k ÷ (1−R²)/(n−k−1)</div></div></div></div>
+
+<div class="qcard"><div class="qtag">Q4 计算</div><div class="qtxt">β̂=0.81，se=0.043。求t值。</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ t=0.81/0.043=<strong>18.84</strong>，>>2→高度显著。</p></div></div></div>
+
+<div class="qcard"><div class="qtag g">简答Q12</div><div class="qtxt"><strong>多元回归中为什么做了F检验还要做t检验？</strong></div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>F检验只能说"整体上至少有一个变量有用"，不能判定<span class="kw">每一个</span>是否都有用。需t检验逐个判断。</p></div></div></div>
+
+</div>
+</div><!-- /chapter 5 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 6: 多重共线性 -->
+<!-- ================================================================ -->
+<div class="chapter" id="c6">
+<h2>📌 第六章：多重共线性与VIF（单选高频）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 全部题目（4道）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">如果VIF=10，则什么问题是严重的（ ）</div>
+<div class="opt">A. 异方差</div><div class="opt">B. 序列相关</div><div class="opt">C. 多重共线性</div><div class="opt">D. 解释变量与随机项相关</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">C. 多重共线性</span></p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q2</div><div class="qtxt">多重共线性严重时，VIF的经验阈值是（ ）</div>
+<div class="opt">A. >0</div><div class="opt">B. <0</div><div class="opt">C. >5</div><div class="opt">D. <5</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">C. >5</span> &nbsp;VIF>5严重，>10非常严重</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q3</div><div class="qtxt">多重共线性严重时，典型表现是（ ）</div>
+<div class="opt">A. R²高但各系数t值不显著</div><div class="opt">B. R²低但各系数t显著</div><div class="opt">C. R²和t都高</div><div class="opt">D. R²和t都低</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">A. R²高但t值不显著</span> &nbsp;X们联合能解释Y，但分不清各自贡献→se大→t小</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q4 计算</div><div class="qtxt">X₁对其余解释变量回归的R²=0.92。求VIF₁。</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ VIF=1/(1−0.92)=1/0.08=<strong>12.5>10→严重</strong></p></div>
+<div class="know-box"><div class="fml">VIF<sub>j</sub> = 1/(1−R<sub>j</sub>²)</div></div></div></div>
+
+</div>
+</div><!-- /chapter 6 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 7: 对数弹性 -->
+<!-- ================================================================ -->
+<div class="chapter" id="c7">
+<h2>📌 第七章：对数模型与弹性（单选送分）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 全部题目（3道+速查表）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">双对数模型 lnY=β₀+β₁lnX+u中，β₁的含义是（ ）</div>
+<div class="opt">A. Y关于X的增长量</div><div class="opt">B. Y关于X的增长速度</div><div class="opt">C. Y关于X的边际倾向</div><div class="opt">D. Y关于X的弹性</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">D. 弹性</span></p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q2</div><div class="qtxt">lnŶ=2.00+0.75lnX。收入增1%，消费增（ ）</div>
+<div class="opt">A. 2%</div><div class="opt">B. 0.2%</div><div class="opt">C. 0.75%</div><div class="opt">D. 7.5%</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">C. 0.75%</span> &nbsp;双对数→弹性→直接读系数</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q3 区分半对数</div><div class="qtxt">lnY=β₀+β₁X+u中，β₁含义是（ ）</div>
+<div class="opt">A. X变1单位，Y变(β₁×100)%</div><div class="opt">B. Y关于X的弹性</div><div class="opt">C. X变1%，Y变β₁单位</div><div class="opt">D. Y关于X的边际变化</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>✅ <span class="correct">A. X变1单位，Y变(β₁×100)%</span></p></div>
+<div class="know-box"><h4>📚 三种对数模型速查</h4>
+<table class="tbl"><tr><th>模型</th><th>β₁叫什么</th><th>怎么读</th></tr>
+<tr><td>lnY=β₀+β₁lnX</td><td>弹性</td><td>X变1%，Y变β₁%</td></tr>
+<tr><td>lnY=β₀+β₁X</td><td>半弹性</td><td>X变1单位，Y变β₁×100%</td></tr>
+<tr><td>Y=β₀+β₁lnX</td><td>半弹性</td><td>X变1%，Y变β₁/100单位</td></tr></table>
+<p>口诀：<strong>Y取ln→读%；X取ln→读%。没取→读绝对量。</strong></p></div></div></div>
+
+</div>
+</div><!-- /chapter 7 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 8: Logit/Probit -->
+<!-- ================================================================ -->
+<div class="chapter" id="c8">
+<h2>📌 第八章：Logit与Probit模型（Ch17.1）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 全部题目（3道）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">Logit模型和Probit模型的区别是什么？</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p><strong>用的函数不同：</strong>Logit用<span class="kw">逻辑斯蒂函数</span>Λ(z)=eᶻ/(1+eᶻ)，Probit用<span class="kw">标准正态CDF</span>Φ(z)。结果几乎一样。</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q2 🔥必考陷阱</div><div class="qtxt">"Logit模型中β₁=0.02，所以收入每增1000元，贷款概率增2%。"对吗？</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案+知识点'">▼ 看答案+知识点</button>
+<div class="ak-wrap"><div class="ans-box"><p>❌ <strong>不对！</strong>Logit/Probit的<span class="kwr">系数 ≠ 边际效应</span>。边际效应=β×g(xβ)，g是密度函数。</p></div>
+<div class="know-box"><div class="trp">这是老师专门强调的考点——和普通OLS不同，不能直接读系数！</div></div></div></div>
+
+<div class="qcard"><div class="qtag">Q3</div><div class="qtxt">线性概率模型（LPM）的主要缺陷是什么？</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>预测概率可能<span class="kwr"><0或>1</span>，没有意义。异方差性固有存在。</p></div></div></div>
+
+</div>
+</div><!-- /chapter 8 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 9: 面板 -->
+<!-- ================================================================ -->
+<div class="chapter" id="c9">
+<h2>📌 第九章：面板数据 FE vs RE（Ch14）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 全部题目（2道）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">FE和RE的核心区别是什么？</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box">
+<table class="tbl"><tr><th></th><th>FE 固定效应</th><th>RE 随机效应</th></tr>
+<tr><td>方法</td><td>减均值消除个体效应</td><td>GLS保留</td></tr>
+<tr><td>假设</td><td>个体效应可和X相关</td><td class="kwr">个体效应和X不相关</td></tr></table>
+</div></div></div>
+
+<div class="qcard"><div class="qtag">Q2 🔥</div><div class="qtxt">Hausman检验拒绝原假设，选FE还是RE？为什么？</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>选<span class="kwr">FE</span>。H₀:个体效应与X不相关→拒绝→RE不成立→必须FE。</p></div></div></div>
+
+</div>
+</div><!-- /chapter 9 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 10: 时间序列 -->
+<!-- ================================================================ -->
+<div class="chapter" id="c10">
+<h2>📌 第十章：时间序列 ADF/协整/伪回归（Ch18）</h2>
+
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 全部题目（2道）</div>
+<div class="sec-body">
+
+<div class="qcard"><div class="qtag">Q1</div><div class="qtxt">ADF检验的H₀是什么？</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p>H₀: <strong>有单位根（非平稳）</strong>。⚠️ADF的H₀跟一般检验相反——拒绝H₀才说明平稳。</p></div></div></div>
+
+<div class="qcard"><div class="qtag">Q2</div><div class="qtxt">两个I(1)序列直接回归可能出现什么问题？</div>
+<button class="btn" onclick="var w=this.nextElementSibling;w.classList.toggle('open');this.textContent=w.classList.contains('open')?'▲ 收起':'▼ 看答案'">▼ 看答案</button>
+<div class="ak-wrap"><div class="ans-box"><p><strong>伪回归</strong>——R²高但全是假的。若线性组合平稳→<strong>协整</strong>→可建ECM（误差修正模型）。</p></div></div></div>
+
+</div>
+</div><!-- /chapter 10 -->
+
+<!-- ====== FINAL ====== -->
+<div class="bar" style="font-size:17px;line-height:2.5;">
+  <strong>🏁 进考场前最后看一遍</strong><br>
+  E(u|X)=0 → 无偏 &nbsp;|&nbsp; Var(u|X)=σ² → 有效<br>
+  m类→m−1个虚拟变量 &nbsp;|&nbsp; 交互项β₃=斜率差异<br>
+  DW∈[0,4] &nbsp;|&nbsp; dL~dU之间=无法判断<br>
+  VIF>5严重 &nbsp;|&nbsp; BP: LM=nR²<br>
+  |t|>临界值→显著 &nbsp;|&nbsp; p<0.05→显著<br>
+  DID=FE+Treat×Post &nbsp;|&nbsp; Hausman拒绝→选FE
+</div>
+
+<footer class="page-footer">
+  <p>📊 <span class="st">计量经济学 · 以题带学</span> · 期末专属题库</p>
+  <p>四川农业大学 · 经济学院 · 2026春 | ✍️ <span class="st">Hermes × 高兴</span></p>
+</footer>
+
+</div><!-- /main -->
+
+<script>
+// Sidebar nav
+document.querySelectorAll('.sidebar a').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
