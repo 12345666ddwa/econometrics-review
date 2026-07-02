@@ -89,6 +89,7 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--cre
   <a href="#c8">📌 8.Logit/Probit</a>
   <a href="#c9">📌 9.面板数据</a>
   <a href="#c10">📌 10.时间序列</a>
+  <a href="#c11">📖 11.名词解释速查</a>
 </nav>
 
 <div class="main">
@@ -536,6 +537,75 @@ DW &gt; 4−dL → 负自相关
 
 </div>
 </div><!-- /chapter 10 -->
+
+<!-- ================================================================ -->
+<!-- CHAPTER 11: 名词解释速查 -->
+<!-- ================================================================ -->
+<div class="chapter" id="c11" style="border-left-color:var(--gold)">
+<h2>📖 第十一章：名词解释速查（25个全）</h2>
+<div class="em">考试大概率从🔴中挑1~2个+🟡中挑1个 | 每题3~5分</div>
+
+<!-- ===== 核心概念 ===== -->
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 一、核心概念（7个 — 出现概率⭐⭐⭐⭐⭐）</div>
+<div class="sec-body">
+<table class="tbl" style="font-size:14.5px;text-align:left">
+<tr><th style="width:18%">名词</th><th style="width:82%">核心定义</th></tr>
+<tr><td><strong>高斯-马尔可夫定理</strong></td><td>MLR.1~MLR.5满足时，OLS是所有<span class="kw">线性无偏</span>估计量中<span class="kwr">方差最小</span>的（=BLUE）</td></tr>
+<tr><td><strong>BLUE</strong></td><td><span class="kw">B</span>est(最小方差)+<span class="kw">L</span>inear(线性)+<span class="kw">U</span>nbiased(无偏)+<span class="kw">E</span>stimator。⚠️B=最小方差、不是"最小残差"！</td></tr>
+<tr><td><strong>零条件均值</strong></td><td>E(u|X)=<span class="kwr">0</span> — 保证OLS<span class="kw">无偏性</span>的核心假设。⚠️别写成E(X|u)=0！</td></tr>
+<tr><td><strong>同方差性</strong></td><td>Var(u|X)=σ² — 保证OLS<span class="kw">有效性</span>（最小方差）。违反→异方差→t/F失效</td></tr>
+<tr><td><strong>多重共线性</strong></td><td>解释变量间存在近似的线性关系 → se变大、t不显著、但OLS仍无偏</td></tr>
+<tr><td><strong>无完全多重共线性</strong></td><td>MLR.<span class="kwr">3</span> — 样本中X之间不存在完全线性关系。若违反→OLS根本算不出来</td></tr>
+<tr><td><strong>残差 vs 误差</strong></td><td><span class="kw">误差u</span>不可观测；<span class="kwr">残差û</span>=Y−Ŷ是u的代理。Σû=0恒成立，Σu不一定</td></tr>
+</table>
+</div>
+
+<!-- ===== 模型与方法 ===== -->
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 二、模型与方法（7个 — ⭐⭐⭐⭐）</div>
+<div class="sec-body">
+<table class="tbl" style="font-size:14.5px;text-align:left">
+<tr><th style="width:18%">名词</th><th style="width:82%">核心定义</th></tr>
+<tr><td><strong>最小二乘法 OLS</strong></td><td>找一条线使<span class="kwr">残差平方和</span> Σ(Yᵢ−Ŷᵢ)² 最小。MLR.1~5满足时=BLUE</td></tr>
+<tr><td><strong>判定系数 R²</strong></td><td>R²=SSE/SST=<span class="kw">1−SSR/SST</span>，X对Y的解释比例，∈[<span class="kwr">0,1</span>]。⚠️R²高≠模型好！</td></tr>
+<tr><td><strong>加权最小二乘法 WLS</strong></td><td>异方差的<span class="kwr">治疗方法</span> — 方差小的观测给大权、方差大的给小权。<span class="kw">重视小误差，轻视大误差</span></td></tr>
+<tr><td><strong>广义差分法</strong></td><td>序列相关的<span class="kwr">治疗方法</span> — 对变量做拟差分变换再OLS（Cochrane-Orcutt迭代）</td></tr>
+<tr><td><strong>固定效应 FE</strong></td><td>面板估计方法：<span class="kwr">减均值</span>消除不随时间变的个体异质性。允许个体效应与X<span class="kw">相关</span></td></tr>
+<tr><td><strong>随机效应 RE</strong></td><td>面板估计方法：GLS保留个体效应。必须假设个体效应与X<span class="kwr">不相关</span></td></tr>
+<tr><td><strong>面板数据</strong></td><td>同一个体在不同时间的多次观测——既有<span class="kw">截面</span>又有<span class="kwr">时间</span>维度，N大T小</td></tr>
+</table>
+</div>
+
+<!-- ===== 诊断与检验 ===== -->
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 三、诊断与检验（6个 — ⭐⭐⭐⭐）</div>
+<div class="sec-body">
+<table class="tbl" style="font-size:14.5px;text-align:left">
+<tr><th style="width:18%">名词</th><th style="width:82%">核心定义</th></tr>
+<tr><td><strong>异方差性</strong></td><td>Var(u|X)≠常数 → OLS仍<span class="kw">无偏</span>但<span class="kwr">不再有效</span>，t/F检验失效。检：BP(White/G-Q)，治：WLS</td></tr>
+<tr><td><strong>序列相关/自相关</strong></td><td>Cov(uᵢ,uⱼ)≠0 — 常见于<span class="kwr">时间序列</span>。OLS仍无偏但标准误错了。检：DW，治：广义差分</td></tr>
+<tr><td><strong>DW检验</strong></td><td>检验<span class="kwr">一阶自相关</span>。DW∈[0,4]，≈2无自相关。dL~dU之间=<span class="kwr">无法判断</span>（最常考！）</td></tr>
+<tr><td><strong>VIF</strong></td><td>方差膨胀因子=1/(1−Rⱼ²)，衡量多重共线性。>5严重，><span class="kwr">10</span>非常严重</td></tr>
+<tr><td><strong>Hausman检验</strong></td><td>H₀:个体效应与X不相关 → 拒绝→选<span class="kwr">FE</span>，不拒绝→选RE（更有效）</td></tr>
+<tr><td><strong>p值</strong></td><td>H₀成立时观察到当前统计量或更极端的概率。p<<span class="kwr">0.05</span>→拒绝H₀→显著</td></tr>
+</table>
+</div>
+
+<!-- ===== 模型形式 ===== -->
+<div class="sec-title" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')"><span class="arrow">▶</span> 四、模型形式（8个 — ⭐⭐⭐）</div>
+<div class="sec-body">
+<table class="tbl" style="font-size:14.5px;text-align:left">
+<tr><th style="width:18%">名词</th><th style="width:82%">核心定义</th></tr>
+<tr><td><strong>虚拟变量</strong></td><td>取值<span class="kwr">0或1</span>，把定性因素"翻译"成回归能吃的数字。0=基准组，所有系数相对于0解释</td></tr>
+<tr><td><strong>虚拟变量陷阱</strong></td><td>m个类别<span class="kwr">+</span>截距<span class="kwr">+</span>引入全部m个虚拟变量 = <span class="kwr">完全多重共线性</span>！规则：m类→m−1个</td></tr>
+<tr><td><strong>交互项</strong></td><td>虚拟变量×连续变量 — <span class="kwr">乘法方式</span>，让<span class="kw">斜率</span>也因组别不同。β₃=斜率差异</td></tr>
+<tr><td><strong>弹性</strong></td><td>双对数模型lnY=β₀+β₁lnX中：X变<span class="kwr">1%</span>，Y变β₁%。β₁直接读</td></tr>
+<tr><td><strong>半弹性</strong></td><td>lnY=β₀+β₁X中：X变<span class="kw">1单位</span>，Y变β₁×<span class="kwr">100%</span>。或Y=β₀+β₁lnX中：X变1%，Y变β₁/100</td></tr>
+<tr><td><strong>Logit模型</strong></td><td>二元响应模型，假设误差服从<span class="kwr">逻辑分布</span>，Λ(z)=eᶻ/(1+eᶻ)。⚠️系数≠边际效应！</td></tr>
+<tr><td><strong>Probit模型</strong></td><td>二元响应模型，假设误差服从<span class="kwr">标准正态分布</span>，Φ(z)。结果与Logit几乎一样</td></tr>
+<tr><td><strong>LPM 线性概率模型</strong></td><td>OLS直接做0/1回归。优点：系数=边际效应。致命：概率可能<span class="kwr"><0或>1</span></td></tr>
+</table>
+</div>
+
+</div><!-- /chapter 11 -->
 
 <!-- ====== FINAL ====== -->
 <div class="bar" style="font-size:17px;line-height:2.5;">
